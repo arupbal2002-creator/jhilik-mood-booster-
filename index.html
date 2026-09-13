@@ -2,454 +2,593 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Jhilik 🌸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Jhilik's Mood Booster 💗</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Pacifico&display=swap');
-
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
   -webkit-tap-highlight-color:transparent;
 }
 
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+}
+
 body{
-  min-height:100vh;
   overflow:hidden;
-  font-family:"DM Sans",sans-serif;
-  color:#35252c;
+  font-family:"Trebuchet MS",Arial,sans-serif;
+  color:#55364a;
+  background:#fff3f5;
+}
+
+#app{
+  width:100%;
+  height:100svh;
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(circle at 15% 10%,#fff 0,transparent 20%),
-    linear-gradient(135deg,#ffe5ef,#fffaf5,#ffeef5);
+    radial-gradient(circle at 20% 15%,#ffffff 0 7%,transparent 28%),
+    radial-gradient(circle at 90% 80%,#ffe0ea 0 8%,transparent 30%),
+    linear-gradient(135deg,#fff8f7,#ffe7ee,#fff8f5);
 }
 
-/* ---------- FLOWERS ---------- */
-
-#flowers{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:1;
-}
-
-.flower{
+/* PAPER TEXTURE */
+#paper{
   position:absolute;
-  top:-50px;
-  animation:fall linear forwards;
-  opacity:.9;
-}
-
-@keyframes fall{
-  from{
-    transform:translateY(-60px) rotate(0deg);
-    opacity:0;
-  }
-  15%{opacity:1}
-  to{
-    transform:translateY(110vh) rotate(360deg);
-    opacity:0;
-  }
-}
-
-.corner{
-  position:fixed;
-  z-index:2;
-  font-size:28px;
-  opacity:.65;
+  inset:0;
   pointer-events:none;
-  animation:sway 3s ease-in-out infinite;
+  opacity:.35;
+  background-image:
+    radial-gradient(#d89bb2 .7px,transparent .7px);
+  background-size:16px 16px;
 }
 
-.c1{top:7%;left:7%}
-.c2{top:25%;right:7%}
-.c3{bottom:18%;left:7%}
-.c4{bottom:7%;right:9%}
-
-@keyframes sway{
-  50%{
-    transform:translateY(-8px) rotate(8deg);
-  }
-}
-
-/* ---------- MUSIC BUTTON ---------- */
-
+/* MUSIC */
 #musicBtn{
   position:fixed;
+  z-index:999;
   right:14px;
   top:14px;
-  z-index:50;
-
   border:0;
-  border-radius:50px;
-  padding:10px 14px;
-
-  background:rgba(255,255,255,.9);
-  color:#8b5268;
-
-  font-weight:700;
-  font-size:13px;
-
-  box-shadow:0 8px 25px rgba(80,30,50,.12);
+  border-radius:30px;
+  padding:11px 17px;
+  background:rgba(255,255,255,.94);
+  color:#8b4d69;
+  font-size:14px;
+  font-weight:bold;
+  box-shadow:0 7px 22px rgba(110,40,70,.15);
 }
 
-/* ---------- PAGES ---------- */
+#musicBtn.on{
+  color:#df3479;
+}
 
+/* FLOWERS */
+.flower{
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  font-size:27px;
+  animation:flowerFloat 5s ease-in-out infinite;
+}
+
+.f1{left:6%;top:18%}
+.f2{right:6%;top:38%;animation-delay:1s}
+.f3{left:7%;bottom:17%;animation-delay:2s}
+.f4{right:8%;bottom:10%;animation-delay:1.5s}
+.f5{left:45%;top:7%;font-size:21px;animation-delay:2.5s}
+
+@keyframes flowerFloat{
+  50%{
+    transform:translateY(-10px) rotate(5deg);
+  }
+}
+
+/* PETALS */
+.petal{
+  position:absolute;
+  pointer-events:none;
+  z-index:2;
+  animation:petalFall linear forwards;
+}
+
+@keyframes petalFall{
+  from{
+    transform:translateY(-30px) rotate(0deg);
+    opacity:1;
+  }
+  to{
+    transform:translateY(110svh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+/* PAGE */
 .page{
   position:absolute;
   inset:0;
-
-  padding:35px 20px;
-
   display:flex;
   justify-content:center;
   align-items:center;
-
-  text-align:center;
-
+  padding:65px 10px 15px;
   opacity:0;
-  pointer-events:none;
-
-  transform:translateY(30px) scale(.97);
-
+  visibility:hidden;
+  transform:translateX(30px) scale(.98);
   transition:
-    opacity .55s ease,
-    transform .55s cubic-bezier(.2,.8,.2,1);
-
-  z-index:3;
+    opacity .45s ease,
+    transform .45s ease,
+    visibility .45s;
+  z-index:5;
 }
 
 .page.active{
   opacity:1;
-  pointer-events:auto;
+  visibility:visible;
   transform:none;
 }
 
+/* CARD */
 .card{
-  width:min(380px,94vw);
+  width:min(620px,96vw);
+  max-height:calc(100svh - 85px);
+  overflow:auto;
+  position:relative;
 
-  padding:28px 21px;
+  padding:20px 17px 18px;
 
-  border-radius:30px;
+  border-radius:28px;
 
-  background:rgba(255,255,255,.78);
+  background:
+    linear-gradient(
+      rgba(255,255,255,.94),
+      rgba(255,249,247,.94)
+    );
 
-  backdrop-filter:blur(15px);
-  -webkit-backdrop-filter:blur(15px);
+  border:2px solid rgba(255,255,255,.9);
 
-  border:1px solid rgba(255,255,255,.9);
+  box-shadow:
+    0 18px 50px rgba(111,49,77,.16);
 
-  box-shadow:0 22px 60px rgba(100,30,50,.14);
+  scrollbar-width:none;
+}
+
+.card::-webkit-scrollbar{
+  display:none;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px dashed rgba(208,105,143,.25);
+  border-radius:22px;
+  pointer-events:none;
+}
+
+/* MISSION NUMBER */
+.mission{
+  position:relative;
+  z-index:3;
+  text-align:left;
+  color:#9c6079;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:.7px;
+  margin-bottom:6px;
+}
+
+/* TITLES */
+h1,h2,h3,p{
+  position:relative;
+  z-index:3;
 }
 
 h1{
-  font-size:clamp(35px,10vw,47px);
-  margin:12px 0;
-  font-weight:800;
+  color:#74344f;
+  font-size:38px;
+  line-height:1.05;
+  margin:5px 0 12px;
 }
 
 h2{
-  font-size:29px;
-  margin:12px 0;
-  font-weight:800;
+  color:#74344f;
+  font-size:27px;
+  line-height:1.15;
+  margin:7px 0 12px;
 }
 
-.script{
-  font-family:Pacifico,cursive;
-  color:#e65b8a;
+h3{
+  color:#74344f;
 }
 
 p{
-  line-height:1.65;
+  font-size:14px;
+  line-height:1.6;
 }
 
-.sub{
-  font-size:16px;
-  color:#55464d;
-}
-
-.small{
-  font-size:13px;
-  color:#866f79;
-  margin-top:12px;
-}
-
-.big{
-  font-size:22px;
-  font-weight:800;
-}
-
-.flowerBig{
-  font-size:70px;
-  animation:bob 2.5s ease-in-out infinite;
-}
-
-.flowerSmall{
+.script{
+  color:#df4280;
+  font-family:cursive;
   font-size:45px;
-  animation:bob 2.5s ease-in-out infinite;
 }
 
-@keyframes bob{
-  50%{
-    transform:translateY(-9px) rotate(4deg);
-  }
-}
-
-/* ---------- BUTTONS ---------- */
-
-button{
-  border:0;
-  border-radius:50px;
-
-  padding:14px 23px;
-  margin-top:18px;
-
-  background:#e85d8d;
-  color:white;
-
-  font-size:15px;
-  font-weight:800;
-
-  cursor:pointer;
-
-  box-shadow:0 10px 25px rgba(200,55,100,.22);
-
-  transition:.25s ease;
-}
-
-button:active{
-  transform:scale(.93);
-}
-
-button:hover{
-  transform:scale(1.05);
-}
-
-.secondary{
-  background:white;
-  color:#c64d78;
-  border:2px solid #f1b0c6;
-}
-
-.glow{
-  animation:glow 1.8s infinite;
-}
-
-@keyframes glow{
-  50%{
-    box-shadow:
-      0 0 0 8px rgba(232,93,141,.08),
-      0 12px 30px rgba(200,55,100,.3);
-  }
-}
-
-/* ---------- CHARACTER ---------- */
-
-.characterBox{
-  position:relative;
-
-  width:155px;
-  height:180px;
-
-  margin:0 auto 8px;
-
-  display:flex;
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
   align-items:center;
+}
+
+/* CHARACTER */
+.characterWrap{
+  display:flex;
   justify-content:center;
+  align-items:center;
+  min-height:220px;
 }
 
 .character{
-  width:150px;
-  max-height:180px;
-
+  width:min(255px,72vw);
+  max-height:330px;
   object-fit:contain;
 
-  filter:drop-shadow(
-    0 12px 15px rgba(80,25,50,.16)
-  );
+  filter:
+    drop-shadow(0 12px 15px rgba(101,35,64,.16));
 
-  animation:characterFloat 3s ease-in-out infinite;
+  animation:characterFloat 3.5s ease-in-out infinite;
 }
 
 @keyframes characterFloat{
-  0%,100%{
-    transform:translateY(0) rotate(-1deg);
-  }
   50%{
-    transform:translateY(-9px) rotate(1deg);
+    transform:translateY(-8px) rotate(.5deg);
   }
 }
 
-.characterFlower{
-  position:absolute;
-  right:-2px;
-  top:10px;
-
-  font-size:34px;
-
-  animation:flowerWave 2s ease-in-out infinite;
-}
-
-@keyframes flowerWave{
-  50%{
-    transform:rotate(12deg) translateY(-4px);
-  }
-}
-
-/* ---------- SCANNER ---------- */
-
-.bar{
-  height:13px;
-  margin:20px 0;
-
-  background:#f5dce5;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress{
-  width:0;
-  height:100%;
-
-  background:linear-gradient(
-    90deg,
-    #e85d8d,
-    #f49dbb
-  );
-
-  border-radius:20px;
-
-  transition:width 1.5s ease;
-}
-
-/* ---------- JOKE ---------- */
-
-.joke{
-  min-height:120px;
-
+/* FALLBACK */
+.fallback{
+  width:200px;
+  height:240px;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  font-size:19px;
-  line-height:1.6;
-
-  padding:10px;
+  border-radius:25px;
+  background:#ffe1eb;
+  font-size:65px;
 }
 
-/* ---------- SKIP ---------- */
-
-.skipArea{
+/* NOTE */
+.note{
   position:relative;
-
-  width:100%;
-  height:95px;
-
-  margin-top:8px;
+  z-index:3;
+  background:#fff0f5;
+  border:1px solid #f0bdcf;
+  border-radius:17px;
+  padding:13px;
+  margin:12px 0;
+  box-shadow:0 5px 13px rgba(100,40,70,.06);
 }
 
-#skipBtn{
-  position:absolute;
+.note strong{
+  color:#d53b77;
+}
 
-  left:50%;
-  top:18px;
+/* THE SAME FLIRTY LINE */
+.flirt{
+  background:#fff7df;
+  border:1px solid #efd58c;
+  color:#73532d;
+  font-size:13px;
+}
 
-  transform:translateX(-50%);
+.flirt b{
+  color:#c05c20;
+}
 
-  white-space:nowrap;
+/* BUTTONS */
+.buttons{
+  position:relative;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.btn{
+  border:0;
+  border-radius:999px;
+  padding:13px 18px;
+  min-width:145px;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 18px rgba(207,57,116,.18);
 
   transition:
-    left .3s ease,
-    top .3s ease,
-    transform .2s ease;
+    transform .15s,
+    box-shadow .15s;
 }
 
-/* ---------- REVEAL ---------- */
+.btn:active{
+  transform:scale(.95);
+}
 
-.reveal{
-  min-height:150px;
+.primary{
+  background:linear-gradient(135deg,#e83f80,#ee6b9d);
+  color:white;
+}
 
+.secondary{
+  background:#fff;
+  color:#ad456d;
+  border:2px solid #edb2c8;
+  box-shadow:none;
+}
+
+.next{
+  min-width:190px;
+}
+
+/* PROGRESS */
+.progress{
+  height:11px;
+  width:100%;
+  overflow:hidden;
+  background:#f4dce5;
+  border-radius:20px;
+  margin:14px 0 5px;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#e84a87,#f48bb1);
+  transition:width .3s;
+}
+
+.stat{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
+  font-size:11px;
+  color:#80566b;
+}
+
+/* ALERT */
+.alert{
+  padding:15px;
+  border-radius:18px;
+  background:#fff1ef;
+  border:1px solid #edc3c9;
+  text-align:center;
+  margin:12px 0;
+}
+
+.alertIcon{
+  font-size:35px;
+}
+
+/* MOOD OPTIONS */
+.moods{
+  display:grid;
+  gap:9px;
+  margin:15px 0;
+}
+
+.mood{
+  display:flex;
   align-items:center;
-  flex-direction:column;
+  gap:12px;
+  border:1.5px solid #e4b6c7;
+  border-radius:16px;
+  background:white;
+  padding:11px;
+  cursor:pointer;
+  text-align:left;
 }
 
-.revealText{
-  animation:reveal .5s ease;
+.mood.selected{
+  background:#ffe2ed;
+  border-color:#e64583;
+  box-shadow:0 0 0 3px #f9c4d7;
 }
 
-@keyframes reveal{
-  from{
-    opacity:0;
-    transform:translateY(15px) scale(.95);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
+.moodEmoji{
+  font-size:29px;
 }
 
-/* ---------- FINAL ---------- */
-
-.final{
-  width:min(390px,94vw);
-
-  padding:30px 22px;
-
-  border-radius:32px;
-
-  background:rgba(255,255,255,.8);
-
-  backdrop-filter:blur(15px);
-
-  box-shadow:0 25px 70px rgba(100,30,50,.16);
+/* HEART GAME */
+.heartGame{
+  height:220px;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  border:1px solid #efd0db;
+  background:
+    linear-gradient(#edf6ff,#fff0f6);
 }
 
 .heart{
-  font-size:78px;
-  animation:heart 1.2s infinite;
+  position:absolute;
+  top:-40px;
+  font-size:29px;
+  cursor:pointer;
+  animation:heartFall linear forwards;
 }
 
-@keyframes heart{
-  50%{
-    transform:scale(1.15);
+@keyframes heartFall{
+  to{
+    transform:translateY(280px) rotate(20deg);
   }
 }
 
-.finalFlowers{
-  font-size:40px;
-  letter-spacing:4px;
+.score{
+  text-align:center;
+  font-weight:bold;
+  color:#c73d75;
+  margin:9px;
 }
 
-/* ---------- CONFETTI ---------- */
-
-.confetti{
-  position:fixed;
-  z-index:100;
-
-  font-size:20px;
-
-  pointer-events:none;
-
-  animation:confetti 1.8s ease-out forwards;
+/* SCANNER */
+.scanbox{
+  background:#fff9fa;
+  border:1px solid #edc3d0;
+  border-radius:18px;
+  padding:15px;
+  margin:10px 0;
 }
 
-@keyframes confetti{
+/* LIST */
+.list{
+  text-align:left;
+  display:grid;
+  gap:8px;
+}
+
+.list div:before{
+  content:"♥";
+  color:#e94c88;
+  margin-right:8px;
+}
+
+/* PICKUP */
+.pickup{
+  background:#fff;
+  border:1px solid #efc1d0;
+  border-radius:17px;
+  padding:13px;
+  margin:8px 0;
+  text-align:left;
+}
+
+/* MOVING BUTTON */
+.moveZone{
+  height:105px;
+  position:relative;
+  margin-top:5px;
+}
+
+.moving{
+  position:absolute;
+  left:50%;
+  top:8px;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  transition:
+    left .25s,
+    top .25s;
+}
+
+/* FINAL */
+.final{
+  text-align:center;
+}
+
+.bigHeart{
+  font-size:67px;
+  animation:heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+  50%{
+    transform:scale(1.12);
+  }
+}
+
+.bouquet{
+  font-size:67px;
+  animation:bloom 1.2s ease both;
+}
+
+@keyframes bloom{
   from{
-    transform:translateY(0) rotate(0);
-    opacity:1;
+    transform:scale(.3);
+    opacity:0;
   }
   to{
-    transform:
-      translate(
-        calc((var(--x) - 50) * 1vw),
-        105vh
-      )
-      rotate(720deg);
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  z-index:1000;
+  top:-30px;
+  pointer-events:none;
+  animation:confettiFall 3.2s linear forwards;
+}
+
+@keyframes confettiFall{
+  to{
+    transform:translateY(110svh) rotate(720deg);
     opacity:0;
+  }
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+  .page{
+    padding:64px 9px 12px;
+  }
+
+  .card{
+    width:96vw;
+    max-height:calc(100svh - 77px);
+    padding:18px 14px 15px;
+    border-radius:25px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+    gap:5px;
+  }
+
+  .characterWrap{
+    min-height:150px;
+  }
+
+  .character{
+    width:min(220px,63vw);
+    max-height:235px;
+  }
+
+  h1{
+    font-size:34px;
+  }
+
+  h2{
+    font-size:25px;
+  }
+
+  .script{
+    font-size:42px;
+  }
+
+  .btn{
+    width:100%;
+  }
+
+  .buttons{
+    gap:7px;
+  }
+
+  .moveZone{
+    height:115px;
+  }
+
+  .moving{
+    max-width:90%;
   }
 }
 </style>
@@ -457,550 +596,1075 @@ button:hover{
 
 <body>
 
-<div id="flowers"></div>
+<div id="app">
 
-<div class="corner c1">🌸</div>
-<div class="corner c2">🌷</div>
-<div class="corner c3">🌼</div>
-<div class="corner c4">🌺</div>
+  <div id="paper"></div>
 
-<button id="musicBtn" onclick="toggleMusic()">
-  🔊 Music
-</button>
+  <!-- FLOWERS -->
+  <span class="flower f1">🌸</span>
+  <span class="flower f2">🌺</span>
+  <span class="flower f3">🌼</span>
+  <span class="flower f4">🌷</span>
+  <span class="flower f5">🌸</span>
 
-<audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-
-<!-- ================= PAGE 1 ================= -->
-
-<section class="page active" id="p1">
-
-  <div class="card">
-
-    <div class="flowerBig">🌷</div>
-
-    <h1>
-      Hey
-      <span class="script">Jhilik</span>
-      🌸
-    </h1>
-
-    <p class="sub">
-
-      I heard your mood has been
-      acting suspicious lately. 😌
-
-      <br><br>
-
-      So I prepared a completely
-      unnecessary...
-
-      <br>
-
-      slightly ridiculous...
-
-      <br>
-
-      scientifically questionable
-      rescue mission. 😂
-
-    </p>
-
-    <button
-      class="glow"
-      onclick="start();go(2);sfx('pop')">
-
-      Okay, show me 👀
-
-    </button>
-
-  </div>
-
-</section>
+  <!-- MUSIC BUTTON -->
+  <button id="musicBtn" onclick="toggleMusic()">
+    🔇 Music OFF
+  </button>
 
 
-<!-- ================= PAGE 2 ================= -->
+  <!-- ================================================= -->
+  <!-- MISSION 1 -->
+  <!-- ================================================= -->
 
-<section class="page" id="p2">
+  <section class="page active" id="page1">
 
-  <div class="card">
+    <div class="card">
 
-    <div class="flowerSmall">
-      🌻
-    </div>
+      <div class="mission">
+        MISSION 1/10
+      </div>
 
-    <h2>
-      Mood Scanner 🔍
-    </h2>
+      <div class="grid">
 
-    <p class="sub">
+        <div class="characterWrap">
 
-      Please remain calm.
+          <img
+            src="jhilik-cartoon.png"
+            class="character"
+            alt="Cute illustrated portrait"
+            onerror="this.style.display='none';document.getElementById('fallback1').style.display='flex'"
+          >
 
-      <br>
+          <div id="fallback1" class="fallback" style="display:none">
+            🌸💗🌸
+          </div>
 
-      Very serious science
-      is happening.
+        </div>
 
-    </p>
+        <div>
 
-    <div class="bar">
+          <h1>
+            Jhilik's<br>
+            <span class="script">Mood Booster</span>
+          </h1>
 
-      <div
-        class="progress"
-        id="progress">
+          <p>
+            A little digital hug for your overthinking mind,
+            from someone who thinks you're pretty special. 💗
+          </p>
+
+          <div class="note">
+            🌷 <b>You got this, girl!</b><br>
+            And yes... this website is taking its job VERY seriously.
+          </div>
+
+          <div class="flirt note">
+            <b>THE ONE FLIRTY LINE 😏</b><br><br>
+            Honestly... you're making it difficult to keep this website professional. 😏🌸
+          </div>
+
+          <div class="buttons">
+            <button class="btn primary next" onclick="go(2)">
+              Let's Go! 🌸 →
+            </button>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
 
-    <p id="scanText">
-      Subject detected...
-    </p>
-
-    <button onclick="scan()">
-      Start Scan 🧪
-    </button>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= PAGE 3 ================= -->
+  <!-- ================================================= -->
+  <!-- MISSION 2 -->
+  <!-- ================================================= -->
 
-<section class="page" id="p3">
+  <section class="page" id="page2">
 
-  <div class="card">
+    <div class="card">
 
-    <div class="characterBox">
+      <div class="mission">
+        MISSION 2/10
+      </div>
 
-      <img
-        src="jhilik-cartoon.png"
-        class="character"
-        alt="Cute animated Jhilik">
+      <div class="grid">
 
-      <div class="characterFlower">
-        🌸
+        <div>
+
+          <h2>🚨 ALERT!</h2>
+
+          <div class="alert">
+
+            <div class="alertIcon">
+              🚨
+            </div>
+
+            <h3>
+              Jhilik's smile has gone missing...
+            </h3>
+
+            <p>
+              Our mission?
+              Find it.
+              <br>
+              And maybe steal a few giggles along the way. 😏
+            </p>
+
+          </div>
+
+          <div class="flirt note">
+            <b>THE ONE FLIRTY LINE 😏</b><br><br>
+            Honestly... you're making it difficult to keep this website professional. 😏🌸
+          </div>
+
+          <div class="buttons">
+
+            <button class="btn primary next" onclick="go(3)">
+              I'm on the case 🕵️ →
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="characterWrap">
+
+          <img
+            src="jhilik-cartoon.png"
+            class="character"
+            alt="Cute illustrated portrait"
+          >
+
+        </div>
+
       </div>
 
     </div>
 
-    <h2>
-      Diagnosis 🌷
-    </h2>
-
-    <p class="sub">
-
-      ⚠️ Mild case of
-
-      <br>
-
-      <b>
-        “I need a better day.”
-      </b>
-
-    </p>
-
-    <br>
-
-    <p><b>Doctor's orders:</b></p>
-
-    <br>
-
-    <p>
-      ☑ Eat something you like
-      <br>
-      ☑ Listen to your favourite song
-      <br>
-      ☑ Ignore unnecessary nonsense
-      <br>
-      ☑ Smile at least once
-      <br>
-      ☑ Accept one flower 🌷
-    </p>
-
-    <button
-      onclick="go(4);sfx('sparkle')">
-
-      Prescription Accepted 💊
-
-    </button>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= PAGE 4 ================= -->
+  <!-- ================================================= -->
+  <!-- MISSION 3 -->
+  <!-- ================================================= -->
 
-<section class="page" id="p4">
+  <section class="page" id="page3">
 
-  <div class="card">
+    <div class="card">
 
-    <div class="characterBox">
-
-      <img
-        src="jhilik-cartoon.png"
-        class="character"
-        alt="Cute animated Jhilik">
-
-      <div class="characterFlower">
-        🌹
+      <div class="mission">
+        MISSION 3/10
       </div>
 
-    </div>
-
-    <p class="quote sub">
-
-      You don't have to pretend
-      you're okay all the time.
-
-      <br><br>
-
-      If today feels weird...
-
-      <br>
-
-      let it be weird.
-
-      <br><br>
-
-      Tomorrow gets another chance. 🌸
-
-    </p>
-
-    <p class="small">
-
-      And hey...
-
-      <br>
-
-      someone is quietly rooting
-      for you. ❤️
-
-    </p>
-
-    <button
-      onclick="go(5);sfx('soft')">
-
-      Okay... one suspicious thing 👀
-
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PAGE 5 ================= -->
-
-<section class="page" id="p5">
-
-  <div class="card">
-
-    <div class="characterBox">
-
-      <img
-        src="jhilik-cartoon.png"
-        class="character"
-        alt="Cute animated Jhilik">
-
-      <div class="characterFlower">
-        🌷
-      </div>
-
-    </div>
-
-    <p class="small">
-      FLIRT DETECTOR — CONFIDENTIAL 🔐
-    </p>
-
-    <div
-      class="joke"
-      id="joke">
-
-      Tap the button.
-
-      <br>
-
-      I promise the machine
-      is completely professional. 😌
-
-    </div>
-
-    <button onclick="nextJoke();sfx('boing')">
-      Scan for flirting 🔍
-    </button>
-
-    <button
-      class="secondary"
-      onclick="anotherJoke();sfx('pop')">
-
-      Try another 😏
-
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PAGE 6 ================= -->
-
-<section class="page" id="p6">
-
-  <div class="card">
-
-    <div class="flowerSmall">
-      🌸💗🌸
-    </div>
-
-    <p class="small">
-      RESULTS ARE IN...
-    </p>
-
-    <h2>
-      WARNING ⚠️
-    </h2>
-
-    <p class="big">
-      Excessive cuteness detected.
-    </p>
-
-    <br>
-
-    <p class="sub">
-
-      Possible side effects:
-
-      <br><br>
-
-      random smiling 😌
-      <br>
-      people staring 👀
-      <br>
-      flowers mysteriously appearing 🌷
-      <br>
-      one particular guy
-      getting distracted. 😂
-
-    </p>
-
-    <button
-      class="glow"
-      onclick="go(7);sfx('heartbeat')">
-
-      Continue at your own risk 💗
-
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PAGE 7 ================= -->
-
-<section class="page" id="p7">
-
-  <div class="card">
-
-    <div class="characterBox">
-
-      <img
-        src="jhilik-cartoon.png"
-        class="character"
-        alt="Cute animated Jhilik">
-
-      <div class="characterFlower">
-        🌸
-      </div>
-
-    </div>
-
-    <p class="small">
-      FINAL INVESTIGATION 🕵️
-    </p>
-
-    <h2>
-      Okay...
-    </h2>
-
-    <p class="sub">
-      There is one tiny thing
-      left to reveal. 👀
-    </p>
-
-    <div class="reveal">
-
-      <p
-        class="big"
-        id="revealText">
-
-        Tap Reveal.
-
+      <h2>
+        🔎 Mood Scanner
+      </h2>
+
+      <p>
+        Please remain calm.
+        Very serious science is happening. 🧪
       </p>
 
+      <div class="scanbox">
+
+        <div class="stat">
+          <span>Scanning your vibe...</span>
+          <b id="scanPercent">0%</b>
+        </div>
+
+        <div class="progress">
+          <div class="bar" id="scanBar"></div>
+        </div>
+
+        <p class="small">
+          Subject: Jhilik 💗
+        </p>
+
+      </div>
+
+      <div class="characterWrap">
+
+        <img
+          src="jhilik-cartoon.png"
+          class="character"
+          alt="Cute illustrated portrait"
+        >
+
+      </div>
+
+      <div class="flirt note">
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="btn primary"
+          id="scanBtn"
+          onclick="startScan()"
+        >
+          Start Scan 🧪
+        </button>
+
+        <button
+          class="btn primary next"
+          id="next3"
+          onclick="go(4)"
+          style="display:none"
+        >
+          Scan Complete → 
+        </button>
+
+      </div>
+
     </div>
 
-    <button
-      id="revealBtn"
-      class="glow"
-      onclick="reveal();sfx('heartbeat')">
+  </section>
 
-      Reveal 😏
 
-    </button>
+  <!-- ================================================= -->
+  <!-- MISSION 4 -->
+  <!-- ================================================= -->
 
-    <div class="skipArea">
+  <section class="page" id="page4">
 
-      <button
-        id="skipBtn"
-        class="secondary"
-        onclick="moveSkip()">
+    <div class="card">
 
-        Skip before it gets embarrassing 😂
+      <div class="mission">
+        MISSION 4/10
+      </div>
 
-      </button>
+      <h2>
+        How are you feeling today?
+      </h2>
+
+      <p>
+        Be honest... I won't judge. 😌
+      </p>
+
+      <div class="moods">
+
+        <button class="mood" onclick="chooseMood(this,'meh')">
+          <span class="moodEmoji">😐</span>
+          <span>
+            <b>Meh</b><br>
+            <small>(we'll fix that)</small>
+          </span>
+        </button>
+
+        <button class="mood" onclick="chooseMood(this,'confused')">
+          <span class="moodEmoji">😵‍💫</span>
+          <span>
+            <b>Confused</b><br>
+            <small>(you got this)</small>
+          </span>
+        </button>
+
+        <button class="mood" onclick="chooseMood(this,'dont')">
+          <span class="moodEmoji">😭</span>
+          <span>
+            <b>Don't ask</b><br>
+            <small>(I'm here)</small>
+          </span>
+        </button>
+
+      </div>
+
+      <div
+        class="note"
+        id="moodMessage"
+        style="display:none"
+      ></div>
+
+      <div class="characterWrap">
+
+        <img
+          src="jhilik-cartoon.png"
+          class="character"
+          alt="Cute illustrated portrait"
+        >
+
+      </div>
+
+      <div class="flirt note">
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="btn primary next"
+          id="next4"
+          onclick="go(5)"
+          style="display:none"
+        >
+          Got it 💗 Next →
+        </button>
+
+      </div>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= PAGE 8 ================= -->
+  <!-- ================================================= -->
+  <!-- MISSION 5 -->
+  <!-- ================================================= -->
 
-<section class="page" id="p8">
+  <section class="page" id="page5">
 
-  <div class="final">
+    <div class="card">
 
-    <div class="finalFlowers">
-      🌷🌸🌹🌼
+      <div class="mission">
+        MISSION 5/10
+      </div>
+
+      <h2>
+        💗 Catch the Hearts!
+      </h2>
+
+      <p>
+        Tap the hearts before they disappear.
+        Ready? Go! 🌸
+      </p>
+
+      <div class="score" id="heartScore">
+        Hearts: 0/5
+      </div>
+
+      <div
+        class="heartGame"
+        id="heartGame"
+      ></div>
+
+      <div class="flirt note">
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="btn primary next"
+          id="next5"
+          onclick="go(6)"
+          style="display:none"
+        >
+          You did it! 💗 Next →
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="heart">
-      💗
+  </section>
+
+
+  <!-- ================================================= -->
+  <!-- MISSION 6 -->
+  <!-- ================================================= -->
+
+  <section class="page" id="page6">
+
+    <div class="card">
+
+      <div class="mission">
+        MISSION 6/10
+      </div>
+
+      <div class="grid">
+
+        <div>
+
+          <h2>
+            ✨ Compliment Machine
+          </h2>
+
+          <p>
+            Because you deserve to hear nice things...
+            a lot. 💗
+          </p>
+
+          <div class="note">
+
+            <b>Your smile is suspiciously effective.</b>
+
+            <br><br>
+
+            Like... seriously,
+            what's your secret? 😏
+
+          </div>
+
+          <div class="flirt note">
+            <b>THE ONE FLIRTY LINE 😏</b><br><br>
+            Honestly... you're making it difficult to keep this website professional. 😏🌸
+          </div>
+
+          <div class="buttons">
+
+            <button
+              class="btn primary next"
+              onclick="showCompliment()"
+              id="complimentBtn"
+            >
+              Give me a compliment ✨
+            </button>
+
+            <button
+              class="btn primary next"
+              id="next6"
+              onclick="go(7)"
+              style="display:none"
+            >
+              Okay... Next Mission →
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="characterWrap">
+
+          <img
+            src="jhilik-cartoon.png"
+            class="character"
+            alt="Cute illustrated portrait"
+          >
+
+        </div>
+
+      </div>
+
+      <div
+        id="extraCompliment"
+        class="note"
+        style="display:none;text-align:center"
+      >
+        Official scientific result:
+        you're ridiculously adorable. 🌸
+      </div>
+
     </div>
 
-    <h1>
+  </section>
 
-      Mission
 
-      <span class="script">
-        Complete
-      </span>
+  <!-- ================================================= -->
+  <!-- MISSION 7 -->
+  <!-- ================================================= -->
 
-    </h1>
+  <section class="page" id="page7">
 
-    <p class="sub">
+    <div class="card">
 
-      No complicated diagnosis.
+      <div class="mission">
+        MISSION 7/10
+      </div>
 
-      <br>
+      <h2>
+        💗 Flirt Scanner
+      </h2>
 
-      No dramatic speech.
+      <div class="scanbox">
 
-      <br>
+        <div style="font-size:30px">
+          ⚠️
+        </div>
 
-      No unnecessary nonsense.
+        <h3>
+          WARNING!
+        </h3>
 
-      😂
+        <p>
+          <b>Excessive cuteness detected.</b>
+        </p>
 
-      <br><br>
+        <div class="list">
 
-      Just one little prescription:
+          <div>
+            Random smiling
+          </div>
 
-      <br><br>
+          <div>
+            People staring 👀
+          </div>
 
-      <b>
-        Smile more.
-      </b>
+          <div>
+            Flowers mysteriously appearing 🌷
+          </div>
 
-      🌸
+          <div>
+            One particular guy getting distracted 😭
+          </div>
 
-      <br><br>
+        </div>
 
-      Because honestly...
+      </div>
 
-      <br>
+      <div class="characterWrap">
 
-      the world looks a little
-      nicer when you do.
+        <img
+          src="jhilik-cartoon.png"
+          class="character"
+          alt="Cute illustrated portrait"
+        >
 
-      <br><br>
+      </div>
 
-      And if this silly little
-      website managed to steal
-      even one tiny smile from you...
+      <div class="flirt note">
 
-      <br><br>
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
 
-      <span class="script">
-        worth it. ❤️
-      </span>
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
 
-    </p>
+      </div>
 
-    <p class="small">
 
-      — from someone quietly
-      rooting for you 🌷
+      <!-- MOVING BUTTON -->
 
-    </p>
+      <div class="moveZone">
 
-    <button
-      onclick="replay();sfx('celebrate')">
+        <button
+          class="btn secondary moving"
+          id="skipBtn"
+          onclick="moveSkip()"
+        >
+          Skip before it gets embarrassing 😂
+        </button>
 
-      Replay this nonsense 🔄
+      </div>
 
-    </button>
 
-  </div>
+      <div class="buttons">
 
-</section>
+        <button
+          class="btn primary next"
+          onclick="go(8)"
+        >
+          Continue at your own risk 💗 →
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================================= -->
+  <!-- MISSION 8 -->
+  <!-- ================================================= -->
+
+  <section class="page" id="page8">
+
+    <div class="card">
+
+      <div class="mission">
+        MISSION 8/10
+      </div>
+
+      <h2>
+        💌 Pick-up Line Generator
+      </h2>
+
+      <p>
+        You asked for something smooth...
+        the machine has one job. 😏
+      </p>
+
+      <div class="pickup">
+
+        <b>Pick-up line #1</b>
+
+        <br><br>
+
+        "Honestly... you're making it difficult
+        to keep this website professional." 😏🌸
+
+      </div>
+
+      <div class="pickup">
+
+        <b>Scientific explanation:</b>
+
+        <br><br>
+
+        Your smile is apparently
+        interfering with normal website operations. 🧪😂
+
+      </div>
+
+      <div class="characterWrap">
+
+        <img
+          src="jhilik-cartoon.png"
+          class="character"
+          alt="Cute illustrated portrait"
+        >
+
+      </div>
+
+      <div class="flirt note">
+
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
+
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
+
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="btn primary next"
+          onclick="go(9)"
+        >
+          That was smooth enough 😭 → 
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================================= -->
+  <!-- MISSION 9 -->
+  <!-- ================================================= -->
+
+  <section class="page" id="page9">
+
+    <div class="card">
+
+      <div class="mission">
+        MISSION 9/10
+      </div>
+
+      <div class="grid">
+
+        <div>
+
+          <h2>
+            🧠 Anti-Overthinking Button
+          </h2>
+
+          <p>
+            For when your brain just won't chill. 😭
+          </p>
+
+          <button
+            class="btn primary"
+            onclick="calmBrain()"
+          >
+            PRESS IF YOUR BRAIN WON'T SHUT UP 🧠
+          </button>
+
+          <div class="scanbox">
+
+            <div class="stat">
+
+              <span>
+                OVERTHINKING.exe
+              </span>
+
+              <b id="brainPercent">
+                87%
+              </b>
+
+            </div>
+
+            <div class="progress">
+
+              <div
+                class="bar"
+                id="brainBar"
+                style="width:87%"
+              ></div>
+
+            </div>
+
+          </div>
+
+          <div
+            class="note"
+            id="brainMessage"
+          >
+            Breathe... you're doing great. 🌷
+          </div>
+
+          <div class="flirt note">
+
+            <b>THE ONE FLIRTY LINE 😏</b><br><br>
+
+            Honestly... you're making it difficult to keep this website professional. 😏🌸
+
+          </div>
+
+          <div class="buttons">
+
+            <button
+              class="btn primary next"
+              onclick="go(10)"
+            >
+              Feeling better → 💗
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="characterWrap">
+
+          <img
+            src="jhilik-cartoon.png"
+            class="character"
+            alt="Cute illustrated portrait"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================================= -->
+  <!-- MISSION 10 -->
+  <!-- ================================================= -->
+
+  <section class="page" id="page10">
+
+    <div class="card final">
+
+      <div class="mission">
+        MISSION 10/10
+      </div>
+
+      <div class="bigHeart">
+        💗
+      </div>
+
+      <h1>
+        Mission Complete
+      </h1>
+
+      <p>
+        You survived the
+        <b>Mood Rescue Mission.</b> 🌸
+      </p>
+
+      <div class="bouquet">
+        💐
+      </div>
+
+      <div class="note">
+
+        <b>Official final diagnosis:</b>
+
+        <br><br>
+
+        You're allowed to have bad days.
+
+        <br><br>
+
+        You're also allowed
+        to take your time.
+
+        <br><br>
+
+        And if you happen to smile
+        because of this...
+
+        <br><br>
+
+        I'll consider that
+        a successful mission. 😌💗
+
+      </div>
+
+      <div class="flirt note">
+
+        <b>THE ONE FLIRTY LINE 😏</b><br><br>
+
+        Honestly... you're making it difficult to keep this website professional. 😏🌸
+
+      </div>
+
+      <div class="characterWrap">
+
+        <img
+          src="jhilik-cartoon.png"
+          class="character"
+          alt="Cute illustrated portrait"
+        >
+
+      </div>
+
+      <p>
+        Stay happy, Jhilik. 🌷
+      </p>
+
+      <div class="buttons">
+
+        <button
+          class="btn primary"
+          onclick="celebrate();go(1)"
+        >
+          Start Again ↻
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
 
 
 <script>
 
-/* =========================
-   VARIABLES
-========================= */
+/* =====================================================
+   BASIC STATE
+===================================================== */
 
-let musicOn = true;
-let started = false;
-let jokeIndex = 0;
+let currentPage = 1;
+
+let audioContext = null;
+let musicMaster = null;
+let musicPlaying = false;
+let musicTimer = null;
+
 let skipCount = 0;
 
-const jokes = [
+let heartCount = 0;
+let heartTimer = null;
 
-  "Are you always this cute, or did you specifically prepare for this website? 😌🌷",
-
-  "I had a clever pickup line ready... then you smiled and my brain resigned. 😂❤️",
-
-  "I tried counting the flowers here... then I remembered one of them is clearly the prettiest. 🌸",
-
-  "Scientists are confused. Apparently your smile has suspiciously high levels of serotonin. 🧪😂",
-
-  "I blame you. I was perfectly productive until you showed up. 😭",
-
-  "I was going to make a chemistry joke... but honestly, the chemistry is already there. 👀",
-
-  "Breaking news 🚨: one girl is responsible for an unreasonable amount of distraction today. 🌹",
-
-  "Are you Wi-Fi? Because I'm feeling a connection... and I don't even know your password. 😏"
-
-];
+let brainRunning = false;
 
 
-/* =========================
-   NAVIGATION
-========================= */
+/* =====================================================
+   SOUND EFFECTS
+===================================================== */
+
+function sound(type="tap"){
+
+  try{
+
+    audioContext =
+      audioContext ||
+      new(window.AudioContext || window.webkitAudioContext)();
+
+    if(audioContext.state === "suspended"){
+      audioContext.resume();
+    }
+
+    const oscillator =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    const now =
+      audioContext.currentTime;
+
+    let frequency = 440;
+
+    if(type==="tap") frequency=440;
+    if(type==="pop") frequency=620;
+    if(type==="heart") frequency=700;
+    if(type==="sparkle") frequency=900;
+    if(type==="boing") frequency=190;
+    if(type==="success") frequency=760;
+
+    oscillator.type =
+      type==="boing" ? "triangle" : "sine";
+
+    oscillator.frequency.setValueAtTime(
+      frequency,
+      now
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+      frequency*1.25,
+      now+.12
+    );
+
+    gain.gain.setValueAtTime(
+      .0001,
+      now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .055,
+      now+.01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now+.22
+    );
+
+    oscillator
+      .connect(gain)
+      .connect(audioContext.destination);
+
+    oscillator.start(now);
+
+    oscillator.stop(now+.24);
+
+  }catch(e){}
+
+}
+
+
+/* =====================================================
+   BACKGROUND MUSIC
+===================================================== */
+
+function startMusic(){
+
+  if(musicPlaying) return;
+
+  try{
+
+    audioContext =
+      audioContext ||
+      new(window.AudioContext || window.webkitAudioContext)();
+
+    if(audioContext.state==="suspended"){
+      audioContext.resume();
+    }
+
+    musicMaster =
+      musicMaster ||
+      audioContext.createGain();
+
+    musicMaster.gain.value=.045;
+
+    musicMaster.connect(
+      audioContext.destination
+    );
+
+    musicPlaying=true;
+
+    document.getElementById("musicBtn").innerHTML =
+      "🎵 Music ON";
+
+    /*
+      Gentle repeating melody.
+      This is generated in-browser, so there is
+      NO missing music.mp3 file.
+    */
+
+    const notes=[
+      261.63,
+      329.63,
+      392.00,
+      329.63,
+      293.66,
+      349.23,
+      440.00,
+      349.23
+    ];
+
+    let i=0;
+
+    clearInterval(musicTimer);
+
+    musicTimer=setInterval(()=>{
+
+      if(!musicPlaying) return;
+
+      const osc =
+        audioContext.createOscillator();
+
+      const gain =
+        audioContext.createGain();
+
+      const now =
+        audioContext.currentTime;
+
+      osc.type="sine";
+
+      osc.frequency.value =
+        notes[i % notes.length];
+
+      i++;
+
+      gain.gain.setValueAtTime(
+        .0001,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .09,
+        now+.04
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        .0001,
+        now+.72
+      );
+
+      osc
+        .connect(gain)
+        .connect(musicMaster);
+
+      osc.start(now);
+
+      osc.stop(now+.75);
+
+    },820);
+
+  }catch(e){}
+
+}
+
+
+function stopMusic(){
+
+  musicPlaying=false;
+
+  clearInterval(musicTimer);
+
+  document.getElementById("musicBtn").innerHTML =
+    "🔇 Music OFF";
+
+}
+
+
+function toggleMusic(){
+
+  sound("tap");
+
+  if(musicPlaying){
+    stopMusic();
+  }else{
+    startMusic();
+  }
+
+}
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
 
 function go(number){
+
+  sound("pop");
+  startMusic();
 
   document
     .querySelectorAll(".page")
@@ -1008,233 +1672,297 @@ function go(number){
       page.classList.remove("active");
     });
 
-  const page =
-    document.getElementById("p"+number);
+  const target =
+    document.getElementById("page"+number);
 
-  if(page){
-    page.classList.add("active");
+  if(target){
+    target.classList.add("active");
   }
 
-  if(number===6){
-    makeFlowers(10);
+  currentPage=number;
+
+  window.scrollTo(0,0);
+
+  if(number===5){
+    startHeartGame();
   }
 
-  if(number===8){
-    makeFlowers(25);
-    confetti();
-  }
-}
-
-
-/* =========================
-   START MUSIC
-========================= */
-
-function start(){
-
-  if(started) return;
-
-  started=true;
-
-  const music =
-    document.getElementById("music");
-
-  music.volume=.22;
-
-  music.play().catch(()=>{
-    console.log("Music waiting for user interaction.");
-  });
+  makePetals(4);
 
 }
 
 
-/* =========================
-   SCANNER
-========================= */
+/* =====================================================
+   MOOD SCANNER
+===================================================== */
 
-function scan(){
+function startScan(){
 
-  const progress =
-    document.getElementById("progress");
+  startMusic();
+  sound("sparkle");
 
-  const text =
-    document.getElementById("scanText");
+  const button =
+    document.getElementById("scanBtn");
 
-  progress.style.width="15%";
+  const bar =
+    document.getElementById("scanBar");
 
-  text.textContent=
-    "Checking smile levels... 15%";
+  const percent =
+    document.getElementById("scanPercent");
 
-  sfx("pop");
+  button.disabled=true;
 
-  setTimeout(()=>{
+  let value=0;
 
-    progress.style.width="42%";
+  const timer=setInterval(()=>{
 
-    text.textContent=
-      "Detecting unnecessary cuteness... 42%";
+    value += Math.floor(
+      Math.random()*9
+    )+5;
+
+    if(value>=100){
+
+      value=100;
+
+      clearInterval(timer);
+
+      sound("success");
+
+      button.innerText =
+        "Scan Complete 💗";
+
+      document.getElementById(
+        "next3"
+      ).style.display="inline-block";
+
+    }
+
+    bar.style.width=value+"%";
+
+    percent.innerText=value+"%";
+
+  },170);
+
+}
+
+
+/* =====================================================
+   MOOD CHOICE
+===================================================== */
+
+function chooseMood(element,type){
+
+  sound("soft");
+
+  document
+    .querySelectorAll(".mood")
+    .forEach(button=>{
+      button.classList.remove("selected");
+    });
+
+  element.classList.add("selected");
+
+  const message =
+    document.getElementById("moodMessage");
+
+  let text="";
+
+  if(type==="meh"){
+
+    text =
+      "Prescription: one tiny smile, one good song, and zero pressure. 🌷";
+
+  }
+
+  if(type==="confused"){
+
+    text =
+      "Diagnosis: brain has 47 tabs open. Close 46. Keep the cute one. 😭💗";
+
+  }
+
+  if(type==="dont"){
+
+    text =
+      "Okay. No questions. Just sending you a quiet virtual hug. 🫂🌸";
+
+  }
+
+  message.innerHTML=text;
+
+  message.style.display="block";
+
+  document.getElementById(
+    "next4"
+  ).style.display="inline-block";
+
+}
+
+
+/* =====================================================
+   HEART GAME
+===================================================== */
+
+function startHeartGame(){
+
+  const game =
+    document.getElementById("heartGame");
+
+  game.innerHTML="";
+
+  heartCount=0;
+
+  document.getElementById(
+    "heartScore"
+  ).innerText="Hearts: 0/5";
+
+  document.getElementById(
+    "next5"
+  ).style.display="none";
+
+  clearInterval(heartTimer);
+
+  let created=0;
+
+  heartTimer=setInterval(()=>{
+
+    if(created>=14){
+
+      clearInterval(heartTimer);
+
+      return;
+    }
+
+    created++;
+
+    createHeart();
 
   },500);
 
+}
+
+
+function createHeart(){
+
+  const game =
+    document.getElementById("heartGame");
+
+  const heart =
+    document.createElement("span");
+
+  heart.className="heart";
+
+  heart.innerText="💗";
+
+  heart.style.left =
+    (5+Math.random()*88)+"%";
+
+  heart.style.animationDuration =
+    (2.1+Math.random()*1.3)+"s";
+
+  heart.onclick=()=>{
+
+    if(heart.dataset.clicked) return;
+
+    heart.dataset.clicked="yes";
+
+    heart.remove();
+
+    heartCount++;
+
+    sound("heart");
+
+    document.getElementById(
+      "heartScore"
+    ).innerText =
+      "Hearts: "+heartCount+"/5";
+
+    if(heartCount>=5){
+
+      clearInterval(heartTimer);
+
+      document.getElementById(
+        "heartScore"
+      ).innerText =
+        "Hearts: 5/5 — You did it! 🌸";
+
+      document.getElementById(
+        "next5"
+      ).style.display="inline-block";
+
+      makePetals(8);
+
+      sound("success");
+
+    }
+
+  };
+
+  game.appendChild(heart);
+
   setTimeout(()=>{
-
-    progress.style.width="71%";
-
-    text.textContent=
-      "Measuring suspicious charm... 71%";
-
-    sfx("boing");
-
-  },1000);
-
-  setTimeout(()=>{
-
-    progress.style.width="100%";
-
-    text.textContent=
-      "Analysis complete... 100%";
-
-    sfx("sparkle");
-
-  },1500);
-
-  setTimeout(()=>{
-
-    text.textContent=
-      "Diagnosis found! 😌🌷";
-
-  },1900);
-
-  setTimeout(()=>{
-
-    go(3);
-
-  },2600);
+    heart.remove();
+  },4000);
 
 }
 
 
-/* =========================
-   JOKES
-========================= */
+/* =====================================================
+   COMPLIMENT
+===================================================== */
 
-function nextJoke(){
+function showCompliment(){
 
-  jokeIndex++;
+  sound("sparkle");
 
-  if(jokeIndex>=jokes.length){
-    jokeIndex=0;
-  }
+  document.getElementById(
+    "extraCompliment"
+  ).style.display="block";
 
-  document.getElementById("joke")
-    .textContent=jokes[jokeIndex];
+  document.getElementById(
+    "complimentBtn"
+  ).style.display="none";
 
-}
+  document.getElementById(
+    "next6"
+  ).style.display="inline-block";
 
-
-function anotherJoke(){
-
-  jokeIndex++;
-
-  if(jokeIndex>=jokes.length){
-    jokeIndex=0;
-  }
-
-  const box =
-    document.getElementById("joke");
-
-  box.style.opacity="0";
-
-  setTimeout(()=>{
-
-    box.textContent=
-      jokes[jokeIndex];
-
-    box.style.opacity="1";
-
-  },150);
+  makePetals(5);
 
 }
 
 
-/* =========================
-   REVEAL
-========================= */
-
-function reveal(){
-
-  const text =
-    document.getElementById("revealText");
-
-  text.classList.remove("revealText");
-
-  void text.offsetWidth;
-
-  text.classList.add("revealText");
-
-  text.innerHTML=`
-
-    You're actually pretty cute
-    when you smile. 😊🌸
-
-    <br><br>
-
-    And unfortunately...
-
-    <br>
-
-    I have evidence. 😏
-
-    <br><br>
-
-    So yes...
-
-    <br>
-
-    <b>
-      smiling is now officially mandatory.
-    </b>
-
-    🌷😂
-
-  `;
-
-  document.getElementById("revealBtn")
-    .textContent=
-    "Okay... you caught me 😭❤️";
-
-  makeFlowers(18);
-
-}
-
-
-/* =========================
+/* =====================================================
    MOVING SKIP BUTTON
-========================= */
+===================================================== */
 
 function moveSkip(){
 
-  skipCount++;
+  sound("boing");
 
-  sfx("boing");
+  skipCount++;
 
   const button =
     document.getElementById("skipBtn");
 
-  /* FINAL ATTEMPT */
-
   if(skipCount>=5){
 
-    button.textContent=
+    button.innerText =
       "Okay okay 😭 Next page";
 
+    button.className =
+      "btn primary moving";
+
     button.style.left="50%";
-    button.style.top="18px";
+
+    button.style.top="42px";
+
+    button.style.transform=
+      "translateX(-50%)";
 
     button.onclick=function(){
 
       go(8);
-      sfx("celebrate");
 
     };
 
@@ -1242,32 +1970,29 @@ function moveSkip(){
 
   }
 
-
   const positions=[
 
-    ["10%","5px"],
-    ["65%","25px"],
-    ["30%","45px"],
-    ["75%","0px"],
-    ["15%","35px"]
+    {left:"8%",top:"5px"},
+
+    {left:"62%",top:"5px"},
+
+    {left:"20%",top:"65px"},
+
+    {left:"55%",top:"70px"}
 
   ];
 
-
-  const chosen=
-    positions[
-      Math.floor(
-        Math.random()*positions.length
-      )
-    ];
-
+  const position =
+    positions[(skipCount-1)%positions.length];
 
   button.style.left=
-    chosen[0];
+    position.left;
 
   button.style.top=
-    chosen[1];
+    position.top;
 
+  button.style.transform=
+    "translateX(0)";
 
   const messages=[
 
@@ -1277,385 +2002,186 @@ function moveSkip(){
 
     "Almost... 👀",
 
-    "You really thought? 😂",
-
-    "Okayyy stop chasing me 😭"
+    "You really thought? 😂"
 
   ];
 
-
-  button.textContent=
-    messages[
-      Math.min(
-        skipCount-1,
-        messages.length-1
-      )
-    ];
+  button.innerText =
+    messages[skipCount-1];
 
 }
 
 
-/* =========================
-   FLOWERS
-========================= */
+/* =====================================================
+   ANTI OVERTHINKING
+===================================================== */
 
-function makeFlowers(amount=5){
+function calmBrain(){
 
-  const container =
-    document.getElementById("flowers");
+  if(brainRunning) return;
 
-  const list=[
-    "🌸",
-    "🌷",
-    "🌹",
-    "🌻",
-    "🌼",
-    "🌺",
-    "💮"
-  ];
+  brainRunning=true;
 
+  sound("soft");
 
-  for(let i=0;i<amount;i++){
+  let value=87;
 
-    const flower =
-      document.createElement("div");
+  const bar =
+    document.getElementById("brainBar");
 
-    flower.className="flower";
+  const percent =
+    document.getElementById("brainPercent");
 
-    flower.textContent=
-      list[
-        Math.floor(
-          Math.random()*list.length
-        )
-      ];
+  const message =
+    document.getElementById("brainMessage");
 
-    flower.style.left=
-      Math.random()*100+"vw";
+  const timer=setInterval(()=>{
 
-    flower.style.fontSize=
-      (18+Math.random()*16)+"px";
+    value-=8;
 
-    flower.style.animationDuration=
-      (3+Math.random()*3)+"s";
+    if(value<=11){
 
-    container.appendChild(flower);
+      value=11;
 
-    setTimeout(()=>{
+      clearInterval(timer);
 
-      flower.remove();
+      message.innerHTML =
+        "OVERTHINKING.exe has stopped working. 😂🌸<br><br>Breathe... you're doing great.";
 
-    },7000);
+      sound("success");
 
-  }
+      makePetals(6);
 
-}
-
-
-setInterval(()=>{
-
-  makeFlowers(1);
-
-},2800);
-
-
-/* =========================
-   SOUND EFFECTS
-========================= */
-
-let audioContext;
-
-
-function getAudio(){
-
-  if(!audioContext){
-
-    audioContext=
-      new(
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
-
-  }
-
-  if(audioContext.state==="suspended"){
-
-    audioContext.resume();
-
-  }
-
-  return audioContext;
-
-}
-
-
-function tone(
-  frequency,
-  duration,
-  type="sine",
-  volume=.045
-){
-
-  if(!musicOn) return;
-
-  const context=getAudio();
-
-  const oscillator=
-    context.createOscillator();
-
-  const gain=
-    context.createGain();
-
-  oscillator.type=type;
-
-  oscillator.frequency.value=
-    frequency;
-
-  gain.gain.setValueAtTime(
-    volume,
-    context.currentTime
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    .001,
-    context.currentTime+duration
-  );
-
-  oscillator.connect(gain);
-
-  gain.connect(context.destination);
-
-  oscillator.start();
-
-  oscillator.stop(
-    context.currentTime+duration
-  );
-
-}
-
-
-function sfx(name){
-
-  if(!musicOn) return;
-
-
-  if(name==="pop"){
-
-    tone(520,.08);
-
-    setTimeout(()=>{
-      tone(760,.10);
-    },70);
-
-  }
-
-
-  if(name==="boing"){
-
-    tone(220,.12,"triangle");
-
-    setTimeout(()=>{
-      tone(130,.18,"triangle");
-    },90);
-
-  }
-
-
-  if(name==="sparkle"){
-
-    [660,880,1040,1320]
-      .forEach((frequency,index)=>{
-
-        setTimeout(()=>{
-
-          tone(
-            frequency,
-            .12,
-            "sine",
-            .04
-          );
-
-        },index*90);
-
-      });
-
-  }
-
-
-  if(name==="heartbeat"){
-
-    tone(100,.12,"sine",.07);
-
-    setTimeout(()=>{
-      tone(100,.12,"sine",.07);
-    },170);
-
-  }
-
-
-  if(name==="soft"){
-
-    tone(440,.3,"sine",.035);
-
-  }
-
-
-  if(name==="celebrate"){
-
-    [523,659,784,1047,1318]
-      .forEach((frequency,index)=>{
-
-        setTimeout(()=>{
-
-          tone(
-            frequency,
-            .18,
-            "sine",
-            .05
-          );
-
-        },index*100);
-
-      });
-
-    makeFlowers(25);
-
-  }
-
-}
-
-
-/* =========================
-   MUSIC TOGGLE
-========================= */
-
-function toggleMusic(){
-
-  musicOn=!musicOn;
-
-  const music =
-    document.getElementById("music");
-
-  const button =
-    document.getElementById("musicBtn");
-
-
-  if(musicOn){
-
-    button.textContent=
-      "🔊 Music";
-
-    if(started){
-
-      music.play().catch(()=>{});
+      brainRunning=false;
 
     }
 
-  }else{
+    bar.style.width=value+"%";
 
-    button.textContent=
-      "🔇 Music";
+    percent.innerText=value+"%";
 
-    music.pause();
+  },180);
+
+}
+
+
+/* =====================================================
+   FLOWER PETALS
+===================================================== */
+
+function makePetals(amount=5){
+
+  for(let i=0;i<amount;i++){
+
+    const petal =
+      document.createElement("span");
+
+    petal.className="petal";
+
+    petal.innerText=
+      ["🌸","🌷","🌺","💗","✨"][Math.floor(Math.random()*5)];
+
+    petal.style.left =
+      Math.random()*100+"%";
+
+    petal.style.fontSize =
+      (13+Math.random()*13)+"px";
+
+    petal.style.animationDuration =
+      (3+Math.random()*3)+"s";
+
+    petal.style.animationDelay =
+      Math.random()+ "s";
+
+    document.getElementById(
+      "app"
+    ).appendChild(petal);
+
+    setTimeout(()=>{
+      petal.remove();
+    },6500);
 
   }
 
 }
 
 
-/* =========================
-   CONFETTI
-========================= */
+/* =====================================================
+   FINAL CELEBRATION
+===================================================== */
 
-function confetti(){
+function celebrate(){
 
-  const symbols=[
+  startMusic();
+
+  sound("success");
+
+  makePetals(18);
+
+  const emojis=[
     "🌸",
     "💗",
     "✨",
     "🌷",
-    "🌹",
-    "💕"
+    "🌺",
+    "💐"
   ];
 
+  for(let i=0;i<35;i++){
 
-  for(let i=0;i<30;i++){
-
-    const item=
-      document.createElement("div");
+    const item =
+      document.createElement("span");
 
     item.className="confetti";
 
-    item.textContent=
-      symbols[
-        Math.floor(
-          Math.random()*symbols.length
-        )
-      ];
+    item.innerText =
+      emojis[i%emojis.length];
 
-    item.style.left=
-      Math.random()*100+"vw";
+    item.style.left =
+      Math.random()*100+"%";
 
-    item.style.top="-20px";
+    item.style.fontSize =
+      (14+Math.random()*17)+"px";
 
-    item.style.setProperty(
-      "--x",
-      Math.random()*100
-    );
+    item.style.animationDelay =
+      Math.random()*.8+"s";
 
     document.body.appendChild(item);
 
     setTimeout(()=>{
-
       item.remove();
-
-    },2000);
+    },4000);
 
   }
 
 }
 
 
-/* =========================
-   REPLAY
-========================= */
+/* =====================================================
+   FIRST TOUCH
+===================================================== */
 
-function replay(){
+/*
+   Phones normally block sound before the user interacts.
+   The first tap therefore unlocks the audio system.
+*/
 
-  jokeIndex=0;
-  skipCount=0;
+document.addEventListener(
+  "pointerdown",
+  ()=>{
+    startMusic();
+  },
+  {once:true}
+);
 
-  document.getElementById("progress")
-    .style.width="0";
 
-  document.getElementById("scanText")
-    .textContent=
-    "Subject detected...";
+/* =====================================================
+   INITIAL PETALS
+===================================================== */
 
-  document.getElementById("joke")
-    .textContent=
-    "Tap the button. I promise the machine is completely professional. 😌";
-
-  document.getElementById("revealText")
-    .innerHTML=
-    "Tap Reveal.";
-
-  const skip=
-    document.getElementById("skipBtn");
-
-  skip.textContent=
-    "Skip before it gets embarrassing 😂";
-
-  skip.style.left="50%";
-  skip.style.top="18px";
-
-  skip.onclick=moveSkip;
-
-  document.getElementById("revealBtn")
-    .textContent="Reveal 😏";
-
-  go(1);
-
-}
+setTimeout(()=>{
+  makePetals(4);
+},700);
 
 </script>
 
